@@ -9,7 +9,7 @@ public class EntityManagerFactoryProvider {
 
     public static EntityManagerFactory getFactory() {
         if (instance == null) {
-            instance = Persistence.createEntityManagerFactory("atm");
+            instance = Persistence.createEntityManagerFactory("atm-test");
         }
         return instance;
     }
