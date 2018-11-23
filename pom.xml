@@ -15,6 +15,7 @@
         <checkstyle-plugin.version>3.0.0</checkstyle-plugin.version>
         <exec-plugin.version>1.6.0</exec-plugin.version>
         <usb4java.version>1.3.0</usb4java.version>
+        <surefire.version>3.0.0-M1</surefire.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -64,6 +65,13 @@
             <groupId>org.usb4java</groupId>
             <artifactId>usb4java-javax</artifactId>
             <version>${usb4java.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>3.0.5</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -116,6 +124,39 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.version}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*ITest.java</exclude>
+                        <exclude>**/*ITestSuite.java</exclude>
+                        <exclude>**/*RestTest.java</exclude>
+                        <exclude>**/*LargeTest.java</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <phase>integration-test</phase>
+                        <configuration>
+                            <excludes>
+                                <exclude>none</exclude>
+                            </excludes>
+                            <includes>
+                                <include>**/*ITest.java</include>
+                                <include>**/*ITestSuite.java</include>
+                            </includes>
+                            <forkMode>always</forkMode>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
 
         <pluginManagement>
@@ -147,5 +188,12 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
     </build>
 </project>

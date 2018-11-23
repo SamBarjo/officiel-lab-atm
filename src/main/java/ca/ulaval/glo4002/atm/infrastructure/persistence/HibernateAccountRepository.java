@@ -27,7 +27,9 @@ public class HibernateAccountRepository implements AccountRepository {
     @Override
     public void persist(Account account) {
         EntityManager entityManager = new EntityManagerProvider().getEntityManager();
+        entityManager.getTransaction().begin();
         entityManager.persist(account);
+        entityManager.getTransaction().commit();
     }
 
 }
